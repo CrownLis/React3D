@@ -32,7 +32,7 @@ const Model = () => {
 
     return (
         <div>
-        <button style={{margin: 20}} onClick={() => navigate(-1)}>Вернуться к списку</button>
+        <button style={{margin: 20, color: "white"}} onClick={() => navigate(-1)}>Вернуться к списку</button>
         <Canvas
         camera={{
           fov: 90,
