@@ -9,7 +9,7 @@ function App() {
     <div className="App">
      <Routes>
         <Route path="/" element={<Auth />}/>
-        <Route path="/list" element={<List />}/>
+        <Route path="/*" element={<List />}/>
         <Route path="/model/:id" element={<Model />}/>
       </Routes>
     </div>

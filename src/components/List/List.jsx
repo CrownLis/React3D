@@ -12,7 +12,7 @@ const List = () => {
     useEffect(() => {
         const hash = window.location.hash;
         if (hash) {
-            const accessToken = hash.slice(hash.indexOf('=') + 1, hash.indexOf('&'));
+            const accessToken = hash.slice(hash.indexOf('=') + 1, hash.indexOf('&token'));
             window.localStorage.setItem('access_token', accessToken);
         }
     }, []);
