@@ -8,7 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import store from "./store/store";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
     <BrowserRouter>
     <Provider store={store}>
     <Suspense fallback={
@@ -16,9 +15,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <span class="loader"></span>
     </div>
     }>
-    <App />
+      <App />
     </Suspense>
     </Provider>
   </BrowserRouter>
-  </React.StrictMode>
 )
