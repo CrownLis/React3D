@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import { useDispatch, useSelector } from "react-redux";
 import { getDownloadLinkSelector } from "../../store/disk/selectors";
-import { getDownloadLinkAction } from "../../store/disk/asyncAction";
+import { getDownloadLinkAction, getInfoAboutFolderAction } from "../../store/disk/asyncAction";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { getFolderInfoSelector } from "../../store/disk/selectors";
 
