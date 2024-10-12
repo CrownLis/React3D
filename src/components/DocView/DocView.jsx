@@ -15,7 +15,7 @@ const DocView = () => {
 
     const dispatch = useDispatch()
     const downloadLink = useSelector(getDownloadLinkSelector);
-    console.log(`labs/${id}`);
+    console.log(downloadLink);
 
     const docs = [
         {
@@ -26,22 +26,26 @@ const DocView = () => {
     ];
 
     useEffect(() => {
-        dispatch(getDownloadLinkAction(`labs/${id}/${id}`));
+        dispatch(getDownloadLinkAction(`labs/${id}/${id}.docx`));
         dispatch(getInfoAboutFolderAction(`labs/${id}`));
     }, [id])
 
 
     return (
         <div>
-           <button style={{ width: '100%' }} onClick={(e) => {
+           <button style={{ margin: 20 }} onClick={(e) => {
                 e.preventDefault()
             }}>
-                <Link style={{ color: 'white', display: 'block' }} to={`/modelList`}>К моделям</Link>
+                <Link style={{ color: 'white' }} to={`/modelList`}>Перейти к списку моделей</Link>
             </button>
-            <button style={{ margin: 20, color: "white" }} onClick={() => navigate(-1)}>
-                Вернуться к списку
+            <button style={{ margin: 20, color: "white" }} onClick={() => navigate('/labs')}>
+                Вернуться назад
             </button>
-            <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 1000 }} />
+            <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} config={{
+                header: {
+                    disableHeader: true
+                }
+            }} style={{ height: 1000 }} />
         </div>
     )
 }
