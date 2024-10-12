@@ -9,9 +9,9 @@ const yandexApi = axios.create({
     }
 })
 
-export const getModelsList = async () => {
+export const getFolderResources = async (path) => {
     return await yandexApi.get(`/disk/resources/`, {params: {
-        path: 'models'
+        path: path
     }})
 }
 

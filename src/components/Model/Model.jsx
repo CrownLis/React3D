@@ -13,6 +13,7 @@ const Model = () => {
 
   const { id } = useParams();
     const navigate = useNavigate();
+    console.log(id);
     
   const dispatch = useDispatch()
   const downloadLink = useSelector(getDownloadLinkSelector);

@@ -1,4 +1,4 @@
-import { getDownloadLinkAction, getModelsListAction } from './asyncAction';
+import { getDownloadLinkAction, getInfoAboutFolderAction } from './asyncAction';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -26,13 +26,13 @@ const diskSlice = createSlice({
       .addCase(getDownloadLinkAction.rejected, (state) => {
         (state.loading = false), (state.error = 'error')
       })
-      .addCase(getModelsListAction.pending, (state) => {
+      .addCase(getInfoAboutFolderAction.pending, (state) => {
         (state.loading = true)
       })
-      .addCase(getModelsListAction.fulfilled, (state, action) => {
+      .addCase(getInfoAboutFolderAction.fulfilled, (state, action) => {
         (state.loading = false), (state.list = action.payload)
       })
-      .addCase(getModelsListAction.rejected, (state) => {
+      .addCase(getInfoAboutFolderAction.rejected, (state) => {
         (state.loading = false), (state.error = 'error')
       })
   }

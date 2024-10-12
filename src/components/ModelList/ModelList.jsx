@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { getModelsListSelector } from "../../store/disk/selectors";
 import { getInfoAboutFolderAction } from "../../store/disk/asyncAction";
-import { formatName } from "./utils/formatName";
+import { formatName } from "../List/utils/formatName";
 
-const List = () => {
+const ModelList = () => {
+
+
+  const { id } = useParams();
+  const navigate = useNavigate();
 
     const dispatch = useDispatch()
     const modelsList = useSelector(getModelsListSelector);
-    console.log(modelsList);
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -20,12 +24,13 @@ const List = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getInfoAboutFolderAction('models'));
+        dispatch(getInfoAboutFolderAction(`models/${id}`));
     }, [])
 
     return (
         <div style={{ display: "flex", alignItems: 'center', flexDirection: 'column', gap: 20, margin: 20 }}>
-            <h1>Список доступных моделей</h1>
+            <h1>Доступные виды модели</h1>
+            <button style={{margin: 20, color: "white"}} onClick={() => navigate(-1)}>Вернуться к списку</button>
             {modelsList.map(model => {
                 const formattedModelName = formatName(model.name, model.type);
                 console.log(formattedModelName);
@@ -41,4 +46,4 @@ const List = () => {
     )
 }
 
-export default List;
+export default ModelList;
