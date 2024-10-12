@@ -2,18 +2,14 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getModelsListSelector } from "../../store/disk/selectors";
+import { getFolderInfoSelector } from "../../store/disk/selectors";
 import { getInfoAboutFolderAction } from "../../store/disk/asyncAction";
 import { formatName } from "../List/utils/formatName";
 
 const ModelList = () => {
-
-
-  const { id } = useParams();
-  const navigate = useNavigate();
-
     const dispatch = useDispatch()
-    const modelsList = useSelector(getModelsListSelector);
+    const folderInfo = useSelector(getFolderInfoSelector);
+    const { id } = useParams();
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -24,14 +20,18 @@ const ModelList = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getInfoAboutFolderAction(`models/${id}`));
-    }, [])
+        if (id) {
+            dispatch(getInfoAboutFolderAction(`models/${id}`));
+        } else {
+        dispatch(getInfoAboutFolderAction(`models`));
+        }
+    }, [id])
 
     return (
         <div style={{ display: "flex", alignItems: 'center', flexDirection: 'column', gap: 20, margin: 20 }}>
             <h1>Доступные виды модели</h1>
-            <button style={{margin: 20, color: "white"}} onClick={() => navigate(-1)}>Вернуться к списку</button>
-            {modelsList.map(model => {
+            <button style={{ margin: 20, color: "white" }} onClick={() => navigate(-1)}>Вернуться к списку</button>
+            {folderInfo.map(model => {
                 const formattedModelName = formatName(model.name, model.type);
                 console.log(formattedModelName);
 

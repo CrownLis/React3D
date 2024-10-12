@@ -1,15 +1,14 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getModelsListSelector } from "../../store/disk/selectors";
+import { getFolderInfoSelector } from "../../store/disk/selectors";
 import { getInfoAboutFolderAction } from "../../store/disk/asyncAction";
 import { formatName } from "./utils/formatName";
 
 const List = () => {
 
     const dispatch = useDispatch()
-    const modelsList = useSelector(getModelsListSelector);
-    console.log(modelsList);
+    const folderInfo = useSelector(getFolderInfoSelector);
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -20,21 +19,18 @@ const List = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(getInfoAboutFolderAction('models'));
+        dispatch(getInfoAboutFolderAction('labs'));
     }, [])
 
     return (
         <div style={{ display: "flex", alignItems: 'center', flexDirection: 'column', gap: 20, margin: 20 }}>
-            <h1>Список доступных моделей</h1>
-            {modelsList.map(model => {
-                const formattedModelName = formatName(model.name, model.type);
-                console.log(formattedModelName);
-
-                return <button key={model} style={{ width: '100%' }} onClick={(e) => {
-                    dispatch(getInfoAboutFolderAction(model))
+            <h1>Название предмета "Источники питания"</h1>
+            {folderInfo.map(lr => {
+                const formattedName = formatName(lr.name, lr.type);
+                return <button style={{ width: '100%' }} onClick={(e) => {
                     e.preventDefault()
                 }
-                }><Link style={{ color: 'white', display: 'block' }} to={model.type === 'dir' ? `/modelList/${model.name}` : `/model/${model.name}`}>{formattedModelName} </Link> </button>
+                }><Link style={{ color: 'white', display: 'block' }} to={`labs/${formattedName}`}>{formattedName}</Link></button>
 
             })}
         </div>

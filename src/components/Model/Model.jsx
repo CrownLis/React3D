@@ -20,7 +20,7 @@ const Model = () => {
   const loading = useSelector(getLoadingSelector);
 
   useEffect(() => {
-    dispatch(getDownloadLinkAction(id));
+    dispatch(getDownloadLinkAction(`models/${id}`));
   }, [id])
 
   const obj = useLoader(OBJLoader, downloadLink);

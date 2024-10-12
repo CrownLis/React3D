@@ -15,8 +15,9 @@ export const getFolderResources = async (path) => {
     }})
 }
 
-export const getDownloadLink = async (fileName) => {
+export const getDownloadLink = async (path) => {
+    console.log("PATH",path)
     return await yandexApi.get(`/disk/resources/download`, {params: {
-        path: `models/${fileName}`
+        path: path
     }})
 }

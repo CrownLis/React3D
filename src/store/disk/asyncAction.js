@@ -4,7 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 export const getInfoAboutFolderAction = createAsyncThunk('disk/getInfoAboutFolder', async (path) => {
     const response = await getFolderResources(path);
     const data = response.data;
-    console.log(data);
     const items = data['_embedded'].items.map(item => {return {
       name: item.name,
       type: item.type,
@@ -14,9 +13,8 @@ export const getInfoAboutFolderAction = createAsyncThunk('disk/getInfoAboutFolde
     return items;
   });
 
-  export const getDownloadLinkAction = createAsyncThunk('disk/getDownloadLink', async (id) => {
-    console.log(id);
-    const response = await getDownloadLink(id);
+  export const getDownloadLinkAction = createAsyncThunk('disk/getDownloadLink', async (path) => {
+    const response = await getDownloadLink(path);
     const { href: data} = response.data;
     return data;
   });

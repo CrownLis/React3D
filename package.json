@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@cyntler/react-doc-viewer": "^1.17.0",
     "@react-three/drei": "^9.40.0",
     "@react-three/fiber": "^8.9.1",
     "@reduxjs/toolkit": "^2.2.6",
