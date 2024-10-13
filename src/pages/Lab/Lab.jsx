@@ -11,10 +11,8 @@ export const Lab = () => {
 
   const [currentResource, setCurrentResource] = useState();
 
-  const path = `labs/${labPath}`;
+  const path = `/labs/${labPath}`;
   const modelsPath = `${path}/models`
-
-  console.log('labPath', labPath);
 
   const {
     currentData: resources,
@@ -24,6 +22,8 @@ export const Lab = () => {
     path,
     refetchOnMountOrArgChange: true,
   });
+
+  console.log(currentResource?.path.replace('disk:', ''));
 
   const {
     currentData: resourceLink,
@@ -38,6 +38,8 @@ export const Lab = () => {
     },
   );
 
+  console.log(resourceLink);
+
   const isFetching = isResourcesFetching || isResourceLinkUninitialized || isResourceLinkFetching;
 
   const docs = resourceLink
@@ -50,11 +52,10 @@ export const Lab = () => {
 
   useEffect(() => {
     if (isResourcesSuccess) {
-      setCurrentResource(resources[0]);
+      const doc = resources.find(resource => resource.type === 'file');
+      setCurrentResource(doc);
     }
   }, [isResourcesSuccess]);
-
-  console.log('modelsPath', modelsPath)
 
   return (
     <Flex vertical gap={20}>

@@ -1,43 +1,47 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useDispatch, useSelector } from 'react-redux';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { useLoader } from '@react-three/fiber';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Flex, Spin } from 'antd';
 
-import { getDownloadLinkSelector, getLoadingSelector } from '../../store/disk/selectors';
-import { getDownloadLinkAction } from '../../store/disk/asyncAction';
+import { useGetResourceLinkQuery } from '../../store/yandex';
 
 export const Model = () => {
-  const { modelPath } = useParams();
+  const { modelPath, labPath, mPath } = useParams();
+  const [currentResource, setCurrentResource] = useState();
   const navigate = useNavigate();
   
-  console.log(modelPath);
+  const path = mPath ?  `/labs/${labPath}/models/${modelPath}/${mPath}.obj` : `/labs/${labPath}/models/${modelPath}.obj`
 
-  const dispatch = useDispatch();
-  const downloadLink = useSelector(getDownloadLinkSelector);
-  const loading = useSelector(getLoadingSelector);
+  const {
+    currentData: resourceLink,
+    isUninitialized: isResourceLinkUninitialized,
+    isFetching: isResourceLinkFetching,
+    isSuccess: isResourceLinkSuccess,
+  } = useGetResourceLinkQuery(
+    {
+      path,
+    },
+  );
+
+  const isFetching = isResourceLinkUninitialized || isResourceLinkFetching;
 
   useEffect(() => {
-    dispatch(getDownloadLinkAction(`models/${id}`));
-  }, [id]);
+    if (isResourceLinkSuccess) {
+      setCurrentResource(resourceLink.href);
+    }
+  }, [isResourceLinkSuccess]);
 
-  const obj = useLoader(OBJLoader, downloadLink);
-
-  if (loading) {
-    return (
-      <div style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <span class="loader"></span>
-      </div>
-    );
-  }
+  const obj = useLoader(OBJLoader, currentResource);
 
   return (
-    <div>
-      <button style={{ margin: 20, color: 'white' }} onClick={() => navigate(-1)}>
+    <Flex vertical gap={20} style={{height: '100%'}}>
+      <Button onClick={() => navigate(-1)}>
         Вернуться к списку
-      </button>
+      </Button>
+      {isFetching ? <Spin size='large'/> : 
       <Canvas
         camera={{
           fov: 90,
@@ -49,7 +53,8 @@ export const Model = () => {
         <OrbitControls />
         <primitive object={obj} />
       </Canvas>
-    </div>
+      }
+    </Flex>
   );
 };
 

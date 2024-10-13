@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Flex, Typography } from 'antd';
+import { Button, Flex, Typography, Spin } from 'antd';
 
 import { formatName } from '../LabList/utils/formatName';
 import { useGetResourcesQuery } from '../../store/yandex';
 
 export const ModelList = () => {
   const navigate = useNavigate();
+  const { labPath } = useParams();
 
-  const {  } = useParams();
+  const path = `labs/${labPath}/models`;
+
+  const [lastPath, setLastPath] = useState(path);
+
+  console.log(lastPath);
 
   const { currentData: resources = [], isFetching } = useGetResourcesQuery({
-    path: 'models',
+    path: lastPath,
     refetchOnMountOrArgChange: true,
   });
 
   return (
     <Flex vertical gap={20}>
       <Typography.Title level={1}>Доступные виды модели</Typography.Title>
-      <Button onClick={() => navigate(-1)}>Вернуться к списку</Button>
+      <Button onClick={() => navigate(-1)}>Вернуться назад</Button>
       {isFetching ? (
         <Spin size="large" />
       ) : (
@@ -31,7 +36,9 @@ export const ModelList = () => {
                 key={resource.resource_id}
                 type="primary"
                 onClick={() => {
-                  navigate(`${formattedName}`);
+                  resource.type === 'dir' ? 
+                  setLastPath(`${path}/${formattedName}`) :
+                  navigate(`/${lastPath}/${formattedName}`);
                 }}
               >
                 {formattedName}

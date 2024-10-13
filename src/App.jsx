@@ -32,6 +32,7 @@ function App() {
                 <Route path="models">
                   <Route index element={<PrivateRoute component={ModelList} />} />
                   <Route path=":modelPath" element={<PrivateRoute component={Model} />} />
+                  <Route path=":modelPath/:mPath" element={<PrivateRoute component={Model} />} />
                 </Route>
               </Route>
             </Route>

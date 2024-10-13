@@ -10,7 +10,6 @@ export const getInfoAboutFolderAction = createAsyncThunk('disk/getInfoAboutFolde
       type: item.type,
     };
   });
-  console.log(items);
   return items;
 });
 

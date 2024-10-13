@@ -5,3 +5,11 @@ body,
   min-width: 100vw;
   min-height: 100vh;
 }
+
+#proxy-renderer {
+  height: 100%;
+}
+
+#msdoc-renderer {
+  height: 100%
+}
