@@ -5,37 +5,34 @@ const initialState = {
   downloadLink: null,
   list: [],
   loading: false,
-  error:''
+  error: '',
 };
-
 
 const diskSlice = createSlice({
   name: 'disk',
   initialState,
-  reducers: {
-
-  },
-  extraReducers: (builder) => {
+  reducers: {},
+  extraReducers: builder => {
     builder
-      .addCase(getDownloadLinkAction.pending, (state) => {
-        (state.loading = true)
+      .addCase(getDownloadLinkAction.pending, state => {
+        state.loading = true;
       })
       .addCase(getDownloadLinkAction.fulfilled, (state, action) => {
-        (state.loading = false), (state.downloadLink = action.payload)
+        (state.loading = false), (state.downloadLink = action.payload);
       })
-      .addCase(getDownloadLinkAction.rejected, (state) => {
-        (state.loading = false), (state.error = 'error')
+      .addCase(getDownloadLinkAction.rejected, state => {
+        (state.loading = false), (state.error = 'error');
       })
-      .addCase(getInfoAboutFolderAction.pending, (state) => {
-        (state.loading = true)
+      .addCase(getInfoAboutFolderAction.pending, state => {
+        state.loading = true;
       })
       .addCase(getInfoAboutFolderAction.fulfilled, (state, action) => {
-        (state.loading = false), (state.list = action.payload)
+        (state.loading = false), (state.list = action.payload);
       })
-      .addCase(getInfoAboutFolderAction.rejected, (state) => {
-        (state.loading = false), (state.error = 'error')
-      })
-  }
+      .addCase(getInfoAboutFolderAction.rejected, state => {
+        (state.loading = false), (state.error = 'error');
+      });
+  },
 });
 
-export default diskSlice.reducer
+export default diskSlice.reducer;

@@ -1,21 +1,21 @@
-import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import React, { Suspense } from 'react';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Spin } from 'antd';
 
-import store from "./store/store";
+import App from './App';
+import { store } from './store';
+
+import '@cyntler/react-doc-viewer/dist/index.css';
+import './assets/styles/main.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <HashRouter>
+  <BrowserRouter>
     <Provider store={store}>
-    <Suspense fallback={
-    <div style={{height: '100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-    </div>
-    }>
-      <App />
-    </Suspense>
+      <Suspense fallback={<Spin size="large" fullscreen />}>
+        <App />
+      </Suspense>
     </Provider>
-  </HashRouter>
-)
+  </BrowserRouter>,
+);
