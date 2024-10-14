@@ -22,7 +22,7 @@ export const ModelList = () => {
 
   return (
     <Flex vertical gap={20}>
-      <Typography.Title level={1}>Доступные виды модели</Typography.Title>
+      <Typography.Title style={{ textAlign: 'center' }} level={1}>Оборудование для изучения</Typography.Title>
       <Button onClick={() => navigate(-1)}>Вернуться назад</Button>
       {isFetching ? (
         <Spin size="large" />

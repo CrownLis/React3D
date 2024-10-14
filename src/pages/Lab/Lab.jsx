@@ -59,15 +59,8 @@ export const Lab = () => {
 
   return (
     <Flex vertical gap={20}>
-      <Button
-        type="primary"
-        onClick={() => {
-          navigate(modelsPath);
-        }}
-      >
-        Перейти к списку моделей
-      </Button>
-      <Button
+    <Flex justify='space-between'>
+    <Button
         type="primary"
         onClick={() => {
           navigate(`/labs`);
@@ -75,6 +68,24 @@ export const Lab = () => {
       >
         Вернуться к списку
       </Button>
+      <Button
+        style={{ fontWeight: 'bold' }}
+        type="dashed"
+        onClick={() => {
+      
+        }}
+      >
+        Начать тестирование
+      </Button>
+      <Button
+        type="primary"
+        onClick={() => {
+          navigate(modelsPath);
+        }}
+      >
+        Перейти к оборудованию
+      </Button>
+      </Flex>
       {isFetching ? (
         <Spin size="large" />
       ) : (

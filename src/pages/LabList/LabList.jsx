@@ -14,8 +14,8 @@ export const LabList = () => {
   });
 
   return (
-    <Flex vertical gap={20}>
-      <Typography.Title level={1}>Название предмета "Источники питания"</Typography.Title>
+    <Flex vertical gap={20} justify='center'>
+      <Typography.Title style={{ textAlign: 'center'}} level={1}>Название предмета "Источники питания"</Typography.Title>
       {isFetching ? (
         <Spin size="large" />
       ) : (
