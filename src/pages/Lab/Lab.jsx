@@ -23,8 +23,6 @@ export const Lab = () => {
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(currentResource?.path.replace('disk:', ''));
-
   const {
     currentData: resourceLink,
     isUninitialized: isResourceLinkUninitialized,
@@ -37,8 +35,6 @@ export const Lab = () => {
       skip: !currentResource,
     },
   );
-
-  console.log(resourceLink);
 
   const isFetching = isResourcesFetching || isResourceLinkUninitialized || isResourceLinkFetching;
 

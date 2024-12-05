@@ -1,7 +1,15 @@
 export const formatName = (name, type) => {
   if (type === 'dir') {
-    return name;
+    return {
+      extension: 'dir',
+      name,
+    };
   }
   const indexExtension = name.indexOf('.');
-  return name.slice(0, indexExtension);
+  const extension = name.slice(indexExtension, name.length);
+  const nameWithoutExtension = name.slice(0, indexExtension);
+  return {
+    extension,
+    name: nameWithoutExtension
+  }
 };

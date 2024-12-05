@@ -13,8 +13,6 @@ export const ModelList = () => {
 
   const [lastPath, setLastPath] = useState(path);
 
-  console.log(lastPath);
-
   const { currentData: resources = [], isFetching } = useGetResourcesQuery({
     path: lastPath,
     refetchOnMountOrArgChange: true,
@@ -29,8 +27,10 @@ export const ModelList = () => {
       ) : (
         <Flex vertical gap={20}>
           {resources.map(resource => {
-            const formattedName = formatName(resource.name, resource.type);
-
+            const {name: formattedName, extension} = formatName(resource.name, resource.type);
+            if (extension === '.mtl') {
+              return;
+            }
             return (
               <Button
                 key={resource.resource_id}

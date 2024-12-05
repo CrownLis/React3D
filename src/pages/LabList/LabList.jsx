@@ -21,7 +21,7 @@ export const LabList = () => {
       ) : (
         <Flex vertical gap={20}>
           {resources.map(resource => {
-            const formattedName = formatName(resource.name, resource.type);
+            const {name: formattedName} = formatName(resource.name, resource.type);
 
             return (
               <Button
