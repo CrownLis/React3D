@@ -14,11 +14,11 @@ function App() {
   return (
     <ConfigProvider
       theme={{
-        algorithm: theme.darkAlgorithm,
+        algorithm: theme.defaultAlgorithm,
       }}
     >
       <Layout>
-        <Layout.Content style={{ padding: '24px 48px' }}>
+        <Layout.Content style={{backgroundColor: '#f9f9f9' }}>
           <Routes>
             <Route path="/" element={<Navigate to="/labs" />} />
             <Route path="/auth">

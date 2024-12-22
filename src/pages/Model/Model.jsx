@@ -10,26 +10,25 @@ import { useGetResourceLinkQuery } from '../../store/yandex';
 
 const { Title } = Typography;
 
-export const Model = () => {
-  const { modelPath, labPath, mPath } = useParams();
+export const Model = (path, currentModel) => {
   const [currentResource, setCurrentResource] = useState();
   const [currentTexture, setCurrentTexture] = useState();
   const [object, setObject] = useState(null); // Хранение загруженного объекта
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState();
 
-  const path = mPath
-    ? `/labs/${labPath}/models/${modelPath}/${mPath}.obj`
-    : `/labs/${labPath}/models/${modelPath}.obj`;
+  console.log(path.path);
 
-  const texturePath = mPath
-    ? `/labs/${labPath}/models/${modelPath}/${mPath}.mtl`
-    : `/labs/${labPath}/models/${modelPath}.mtl`;
+  const objPath = `${path.path}.obj`;
+
+  const texturePath = `${path.path}.mtl`;
 
   const {
     currentData: resourceLink,
     isFetching: isResourceLinkFetching,
     isSuccess: isResourceLinkSuccess,
-  } = useGetResourceLinkQuery({ path });
+  } = useGetResourceLinkQuery({ path: objPath });
+
+  console.log(resourceLink, currentResource);
 
   const {
     currentData: resourceLink2,
@@ -37,7 +36,7 @@ export const Model = () => {
     isSuccess: isResourceLinkSuccess2,
   } = useGetResourceLinkQuery({ path: texturePath });
 
-  const isFetching = isResourceLinkFetching || isResourceLinkFetching2;
+  const isFetching = isResourceLinkFetching || isResourceLinkFetching2 || isLoading;
 
   useEffect(() => {
     if (isResourceLinkSuccess) {
@@ -67,6 +66,7 @@ export const Model = () => {
 
   const loadMTLAndOBJ = async (objUrl, mtlUrl) => {
     try {
+      setIsLoading(true);
       // Модифицируем MTL
       const modifiedMTL = await fetchAndModifyMTL(mtlUrl, '/labs/textures/'); // Укажите базовый URL для текстур
       if (!modifiedMTL) throw new Error('Не удалось модифицировать MTL-файл.');
@@ -88,7 +88,7 @@ export const Model = () => {
           (error) => reject(error)
         );
       });
-
+      setIsLoading(false);
       return object;
     } catch (error) {
       console.error('Ошибка загрузки OBJ или MTL:', error);
@@ -107,17 +107,16 @@ export const Model = () => {
   }, [currentResource, currentTexture]);
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <Button onClick={() => navigate(-1)}>Вернуться к списку</Button>
-      <Title level={3}>Модель {modelPath}</Title>
+    <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {isFetching || !object ? (
         <Spin size="large" />
       ) : (
         <Canvas
-          style={{backgroundColor: 'white'}}
+          style={{backgroundColor: 'white', marginTop: 40}}
           camera={{
-            fov: 60,
-            position: [0, 0, 3],
+            fov: 90,
+            far: 10000,
+            position: [3, 2, 3],
           }}
         >
           <ambientLight intensity={0.8} />

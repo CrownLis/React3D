@@ -1,25 +1,19 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Flex, Spin } from 'antd';
+import { Flex, Spin } from 'antd';
 
 import { useGetResourceLinkQuery, useGetResourcesQuery } from '../../store/yandex';
 
-export const Lab = () => {
-  const { labPath } = useParams();
-  const navigate = useNavigate();
+export const Lab = memo((path) => {
 
   const [currentResource, setCurrentResource] = useState();
-
-  const path = `/labs/${labPath}`;
-  const modelsPath = `${path}/models`
 
   const {
     currentData: resources,
     isFetching: isResourcesFetching,
     isSuccess: isResourcesSuccess,
   } = useGetResourcesQuery({
-    path,
+    path: path.path,
     refetchOnMountOrArgChange: true,
   });
 
@@ -54,34 +48,7 @@ export const Lab = () => {
   }, [isResourcesSuccess]);
 
   return (
-    <Flex vertical gap={20}>
-    <Flex justify='space-between'>
-    <Button
-        type="primary"
-        onClick={() => {
-          navigate(`/labs`);
-        }}
-      >
-        Вернуться к списку
-      </Button>
-      <Button
-        style={{ fontWeight: 'bold' }}
-        type="dashed"
-        onClick={() => {
-      
-        }}
-      >
-        Начать тестирование
-      </Button>
-      <Button
-        type="primary"
-        onClick={() => {
-          navigate(modelsPath);
-        }}
-      >
-        Перейти к оборудованию
-      </Button>
-      </Flex>
+    <Flex vertical gap={20} style={{height: '100%'}}>
       {isFetching ? (
         <Spin size="large" />
       ) : (
@@ -92,10 +59,13 @@ export const Lab = () => {
             header: {
               disableHeader: true,
             },
+            pdfZoom: {
+              defaultZoom: 30
+            }
           }}
-          style={{ height: 1000 }}
+          style={{ height: '100%' }}
         />
       )}
     </Flex>
   );
-};
+});
