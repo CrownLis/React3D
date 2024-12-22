@@ -8,7 +8,6 @@ import { Lab } from '../Lab/Lab';
 import { Model } from '../Model';
 
 export const LabList = () => {
-  const navigate = useNavigate();
   const [subjects, setSubjects] = useState();
   const [currentSubject, setCurrentSubject] = useState();
   const [books, setBooks] = useState();
@@ -26,17 +25,29 @@ export const LabList = () => {
   const { currentData: resourcesBooks, isFetching: isFetchingBooks } = useGetResourcesQuery({
     path: `/subjects/${currentSubject}`,
     refetchOnMountOrArgChange: true,
-  });
+  },
+{
+  skip: !currentSubject
+}
+);
 
   const { currentData: resourcesChapters, isFetching: isFetchingChapters } = useGetResourcesQuery({
     path: `/subjects/${currentSubject}/${currentBook}`,
     refetchOnMountOrArgChange: true,
-  });
+  },
+  {
+    skip: !currentSubject || !currentBook
+  }
+);
 
   const { currentData: resourcesModels, isFetching: isFetchingModels } = useGetResourcesQuery({
     path: `/subjects/${currentSubject}/${currentBook}/${currentChapter}/models`,
     refetchOnMountOrArgChange: true,
-  });
+  },
+  {
+    skip: !currentSubject || !currentBook || !currentChapter
+  }
+);
 
   const getSubjects = () => {
     const arraySubjects = [];
@@ -127,7 +138,7 @@ export const LabList = () => {
           {currentChapter &&
           <div style={{display: 'flex', flexDirection: 'column', height: '100%'}}>
           <Typography.Paragraph style={{ textAlign: 'center', color: 'black' }}>Выберите интересующее вас оборудование из данного раздела</Typography.Paragraph>
-            <Select style={{ width: '100%' }} options={models} onChange={(model) => setCurrentModel(model)} />
+            <Select style={{ width: '100%' }} options={models} value={currentModel} onChange={(model) => setCurrentModel(model)} />
             {currentModel &&
             <Model path={`/subjects/${currentSubject}/${currentBook}/${currentChapter}/models/${currentModel}/${currentModel}`} currentModel={currentModel}/>
             }

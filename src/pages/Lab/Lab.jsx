@@ -16,6 +16,7 @@ export const Lab = memo((path) => {
     path: path.path,
     refetchOnMountOrArgChange: true,
   });
+  console.log(resources, isResourcesSuccess);
 
   const {
     currentData: resourceLink,
@@ -41,11 +42,11 @@ export const Lab = memo((path) => {
     : [];
 
   useEffect(() => {
-    if (isResourcesSuccess) {
+    if (isResourcesSuccess && resources) {
       const doc = resources.find(resource => resource.type === 'file');
       setCurrentResource(doc);
     }
-  }, [isResourcesSuccess]);
+  }, [isResourcesSuccess, resources]);
 
   return (
     <Flex vertical gap={20} style={{height: '100%'}}>
