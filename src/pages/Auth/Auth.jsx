@@ -13,7 +13,7 @@ export const Auth = () => {
     }
 
     window.location.href =
-      'https://oauth.yandex.ru/authorize?response_type=token&client_id=eacca3682f374561b43cfc4991784ea7';
+      'https://oauth.yandex.ru/authorize?response_type=token&client_id=55d8cfdd366d481fa0fee2b4a917eac7';
   }, [isAuthenticated]);
 
   return isAuthenticated ? <Navigate to="/" /> : <div />;

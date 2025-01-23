@@ -4,7 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button, Spin, Typography } from 'antd';
+import { Button, Spin, Typography, Col } from 'antd';
 import * as THREE from 'three'; // Для работы с материалами
 import { useGetResourceLinkQuery } from '../../store/yandex';
 
@@ -16,8 +16,6 @@ export const Model = (path, currentModel) => {
   const [object, setObject] = useState(null); // Хранение загруженного объекта
   const [isLoading, setIsLoading] = useState();
 
-  console.log(path.path);
-
   const objPath = `${path.path}.obj`;
 
   const texturePath = `${path.path}.mtl`;
@@ -27,8 +25,6 @@ export const Model = (path, currentModel) => {
     isFetching: isResourceLinkFetching,
     isSuccess: isResourceLinkSuccess,
   } = useGetResourceLinkQuery({ path: objPath });
-
-  console.log(resourceLink, currentResource);
 
   const {
     currentData: resourceLink2,
@@ -107,16 +103,18 @@ export const Model = (path, currentModel) => {
   }, [currentResource, currentTexture]);
 
   return (
-    <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {isFetching || !object ? (
-        <Spin size="large" />
+        <Col span={24} style={{alignItems: 'center', justifyContent: 'center', height: '100%', width: '100%' , display: 'flex'}}>
+        <Spin size="large" style={{marginTop: 20}} />
+        </Col>
       ) : (
         <Canvas
           style={{backgroundColor: 'white', marginTop: 40}}
           camera={{
             fov: 90,
             far: 10000,
-            position: [3, 2, 3],
+            position: [122, 70, 122],
           }}
         >
           <ambientLight intensity={0.8} />
